@@ -17,7 +17,7 @@ services:
         image: prabhavagrawal/result-app
         ports:
           - 5001:80
-worker:
+     worker:
         image: prabhavagrawal/worker-app
         depends_on:
          - redis
