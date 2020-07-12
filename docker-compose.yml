@@ -1,25 +1,23 @@
-
-redis:
+version: "2"
+services:
+     redis:
         image: redis
-db:
+     db:
         image: postgres:9.4
         environment:
           - POSTGRES_HOST_AUTH_METHOD:"trust"
-vote:
-        build: ./vote
+     vote:
+        image: prabhavagrawal/vote-app
         ports:
          - 5000:80
-        links:
-         - redis:redis
-result:
-        build: ./result
+        depends_on:
+         - redis
+     result:
+        image: prabhavagrawal/result-app
         ports:
           - 5001:80
-        links:
-          - redis:redis
-          - db:db
 worker:
-        build: ./worker
-        links:
-           - redis:redis
-           - db:db
+        image: prabhavagrawal/worker-app
+        depends_on:
+         - redis
+         - db
